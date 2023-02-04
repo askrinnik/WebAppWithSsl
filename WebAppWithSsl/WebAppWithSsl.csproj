@@ -6,6 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>de20028d-248d-4b63-a699-ce58b3368afa</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+	  <DockerfileTag>ghcr.io/askrinnik/web-app-with-ssl</DockerfileTag>
   </PropertyGroup>
 
   <ItemGroup>
