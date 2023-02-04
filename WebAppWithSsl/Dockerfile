@@ -19,4 +19,8 @@ RUN dotnet publish "WebAppWithSsl.csproj" -c Release -o /app/publish /p:UseAppHo
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+
+# it is expected that the %USERPROFILE%\AppData\Roaming\ASP.NET\Https\*.pfx file was placed to in WebAppWithSsl/Cert directory 
+COPY WebAppWithSsl/Cert /root/.aspnet/https
+
 ENTRYPOINT ["dotnet", "WebAppWithSsl.dll"]
