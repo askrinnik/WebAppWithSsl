@@ -6,6 +6,7 @@ EXPOSE 80
 EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+RUN dotnet dev-certs https
 WORKDIR /src
 COPY ["WebAppWithSsl/WebAppWithSsl.csproj", "WebAppWithSsl/"]
 RUN dotnet restore "WebAppWithSsl/WebAppWithSsl.csproj"
@@ -20,7 +21,6 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 
-# it is expected that the %USERPROFILE%\AppData\Roaming\ASP.NET\Https\*.pfx file was placed to in WebAppWithSsl/Cert directory 
-COPY WebAppWithSsl/Cert /root/.aspnet/https
+COPY --from=build /root/.dotnet/corefx/cryptography/x509stores/my/* /root/.dotnet/corefx/cryptography/x509stores/my/
 
 ENTRYPOINT ["dotnet", "WebAppWithSsl.dll"]
